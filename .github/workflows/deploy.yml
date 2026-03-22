@@ -1,0 +1,22 @@
+name: Deploy Social Scheduler
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to DEV server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 170.9.252.93
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+          script: |
+            cd /home/apps/social-scheduler
+            git pull origin main
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f
