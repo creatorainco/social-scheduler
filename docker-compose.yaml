@@ -5,6 +5,11 @@ services:
     restart: unless-stopped
     ports:
       - "4007:5000"
+    environment:
+      - VIRTUAL_HOST=social.buyfishingrod.com
+      - VIRTUAL_PORT=5000
+      - LETSENCRYPT_HOST=social.buyfishingrod.com
+      - LETSENCRYPT_EMAIL=peter@creatorain.com
     env_file:
       - .env
     volumes:
