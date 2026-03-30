@@ -20,10 +20,9 @@ services:
         condition: service_healthy
       postiz-redis:
         condition: service_healthy
-      temporal:
-        condition: service_started
     networks:
       - postiz-network
+      - temporal-network
       - nginx-network
 
   postiz-postgres:
@@ -56,24 +55,25 @@ services:
     networks:
       - postiz-network
 
-  temporal:
-    image: temporalio/auto-setup:1.28.1
-    container_name: postiz-temporal
+  # Temporal requires Elasticsearch for unlimited search attributes
+  temporal-elasticsearch:
+    image: elasticsearch:7.17.27
+    container_name: temporal-elasticsearch
     restart: unless-stopped
     environment:
-      - DB=postgres12
-      - DB_PORT=5432
-      - POSTGRES_USER=temporal
-      - POSTGRES_PWD=temporal_password
-      - POSTGRES_SEEDS=temporal-db
-      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/production-docker.yaml
-    depends_on:
-      temporal-db:
-        condition: service_healthy
+      - cluster.routing.allocation.disk.threshold_enabled=true
+      - cluster.routing.allocation.disk.watermark.low=512mb
+      - cluster.routing.allocation.disk.watermark.high=256mb
+      - cluster.routing.allocation.disk.watermark.flood_stage=128mb
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+      - xpack.security.enabled=false
+    expose:
+      - 9200
     volumes:
-      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+      - es-data:/usr/share/elasticsearch/data
     networks:
-      - postiz-network
+      - temporal-network
 
   temporal-db:
     image: postgres:16-alpine
@@ -90,16 +90,44 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - postiz-network
+      - temporal-network
+
+  temporal:
+    image: temporalio/auto-setup:1.28.1
+    container_name: postiz-temporal
+    restart: unless-stopped
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal_password
+      - POSTGRES_SEEDS=postiz-temporal-db
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/production-docker.yaml
+      - ENABLE_ES=true
+      - ES_SEEDS=temporal-elasticsearch
+      - ES_VERSION=v7
+    depends_on:
+      temporal-db:
+        condition: service_healthy
+      temporal-elasticsearch:
+        condition: service_started
+    volumes:
+      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+    networks:
+      - temporal-network
 
 volumes:
   postiz-uploads:
   postiz-config:
   postiz-pg-data:
   temporal-pg-data:
+  es-data:
 
 networks:
   postiz-network:
     driver: bridge
+  temporal-network:
+    driver: bridge
+    name: temporal-network
   nginx-network:
     external: true
