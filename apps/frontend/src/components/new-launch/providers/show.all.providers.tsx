@@ -40,35 +40,8 @@ import SkoolProvider from '@gitroom/frontend/components/new-launch/providers/sko
 import WhopProvider from '@gitroom/frontend/components/new-launch/providers/whop/whop.provider';
 import MeweProvider from '@gitroom/frontend/components/new-launch/providers/mewe/mewe.provider';
 
+// CreatoRain: Only Instagram, Facebook, TikTok supported
 export const Providers = [
-  {
-    identifier: 'devto',
-    component: DevtoProvider,
-  },
-  {
-    identifier: 'x',
-    component: XProvider,
-  },
-  {
-    identifier: 'linkedin',
-    component: LinkedinProvider,
-  },
-  {
-    identifier: 'linkedin-page',
-    component: LinkedinProvider,
-  },
-  {
-    identifier: 'reddit',
-    component: RedditProvider,
-  },
-  {
-    identifier: 'medium',
-    component: MediumProvider,
-  },
-  {
-    identifier: 'hashnode',
-    component: HashnodeProvider,
-  },
   {
     identifier: 'facebook',
     component: FacebookProvider,
@@ -82,96 +55,8 @@ export const Providers = [
     component: InstagramProvider,
   },
   {
-    identifier: 'youtube',
-    component: YoutubeProvider,
-  },
-  {
     identifier: 'tiktok',
     component: TiktokProvider,
-  },
-  {
-    identifier: 'pinterest',
-    component: PinterestProvider,
-  },
-  {
-    identifier: 'dribbble',
-    component: DribbbleProvider,
-  },
-  {
-    identifier: 'threads',
-    component: ThreadsProvider,
-  },
-  {
-    identifier: 'discord',
-    component: DiscordProvider,
-  },
-  {
-    identifier: 'slack',
-    component: SlackProvider,
-  },
-  {
-    identifier: 'kick',
-    component: KickProvider,
-  },
-  {
-    identifier: 'twitch',
-    component: TwitchProvider,
-  },
-  {
-    identifier: 'mastodon',
-    component: MastodonProvider,
-  },
-  {
-    identifier: 'bluesky',
-    component: BlueskyProvider,
-  },
-  {
-    identifier: 'lemmy',
-    component: LemmyProvider,
-  },
-  {
-    identifier: 'wrapcast',
-    component: WarpcastProvider,
-  },
-  {
-    identifier: 'telegram',
-    component: TelegramProvider,
-  },
-  {
-    identifier: 'nostr',
-    component: NostrProvider,
-  },
-  {
-    identifier: 'vk',
-    component: VkProvider,
-  },
-  {
-    identifier: 'wordpress',
-    component: WordpressProvider,
-  },
-  {
-    identifier: 'listmonk',
-    component: ListmonkProvider,
-  },
-  {
-    identifier: 'gmb',
-    component: GmbProvider,
-  },
-  {
-    identifier: 'moltbook',
-    component: MoltbookProvider,
-  },
-  {
-    identifier: 'skool',
-    component: SkoolProvider,
-  },
-  {
-    identifier: 'whop',
-    component: WhopProvider,
-  },
-  {
-    identifier: 'mewe',
-    component: MeweProvider,
   },
 ];
 export const ShowAllProviders = forwardRef((props, ref) => {

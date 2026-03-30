@@ -37,41 +37,12 @@ import { SkoolProvider } from '@gitroom/nestjs-libraries/integrations/social/sko
 import { WhopProvider } from '@gitroom/nestjs-libraries/integrations/social/whop.provider';
 import { MeweProvider } from '@gitroom/nestjs-libraries/integrations/social/mewe.provider';
 
+// CreatoRain: Only Instagram, Facebook, TikTok supported
 export const socialIntegrationList: Array<SocialAbstract & SocialProvider> = [
-  new XProvider(),
-  new LinkedinProvider(),
-  new LinkedinPageProvider(),
-  new RedditProvider(),
   new InstagramProvider(),
   new InstagramStandaloneProvider(),
   new FacebookProvider(),
-  new ThreadsProvider(),
-  new YoutubeProvider(),
-  new GmbProvider(),
   new TiktokProvider(),
-  new PinterestProvider(),
-  new DribbbleProvider(),
-  new DiscordProvider(),
-  new SlackProvider(),
-  new KickProvider(),
-  new TwitchProvider(),
-  new MastodonProvider(),
-  new BlueskyProvider(),
-  new LemmyProvider(),
-  new FarcasterProvider(),
-  new TelegramProvider(),
-  new NostrProvider(),
-  new VkProvider(),
-  new MediumProvider(),
-  new DevToProvider(),
-  new HashnodeProvider(),
-  new WordpressProvider(),
-  new ListmonkProvider(),
-  new MoltbookProvider(),
-  new WhopProvider(),
-  new SkoolProvider(),
-  new MeweProvider(),
-  // new MastodonCustomProvider(),
 ];
 
 @Injectable()

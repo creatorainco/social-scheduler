@@ -1,6 +1,6 @@
 services:
   postiz:
-    image: ghcr.io/gitroomhq/postiz-app:latest
+    image: ghcr.io/creatorainco/social-scheduler:latest
     container_name: postiz-app
     restart: unless-stopped
     ports:

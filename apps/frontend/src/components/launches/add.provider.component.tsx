@@ -620,6 +620,12 @@ export const AddProviderComponent: FC<{
         >
           {social
             .filter((item) => {
+              // CreatoRain: Only show supported platforms
+              const allowed = ['facebook', 'instagram', 'instagram-standalone', 'tiktok'];
+              if (!allowed.includes(item.identifier)) {
+                return false;
+              }
+
               if (!props.invite) {
                 return true;
               }
